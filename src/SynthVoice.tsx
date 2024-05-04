@@ -1,12 +1,15 @@
 import * as Tone from "tone";
+import { useState } from "react";
 
 const synth = new Tone.MonoSynth({
   oscillator: { type: "sine" },
 }).toDestination();
 
 function SynthVoice() {
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+
   const playSynth = () => {
-    // synth.triggerAttackRelease("C5", "1n");
+    setIsPlaying(true);
 
     new Tone.Loop(() => {
       synth.triggerAttackRelease("C4", 1);
@@ -15,7 +18,16 @@ function SynthVoice() {
     Tone.Transport.start();
     Tone.start();
   };
-  return <button onClick={playSynth}>Play</button>;
+
+  const stopSynth = () => {
+    setIsPlaying(false);
+    Tone.Transport.cancel();
+  };
+  return (
+    <button onClick={isPlaying ? stopSynth : playSynth}>
+      {isPlaying ? "Stop" : "Play"}
+    </button>
+  );
 }
 
 export default SynthVoice;
