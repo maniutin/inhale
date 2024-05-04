@@ -23,14 +23,21 @@ function SynthVoice() {
     setIsPlaying(false);
     Tone.Transport.cancel();
   };
+
   return (
     <div>
       <button onClick={isPlaying ? stopSynth : playSynth}>
         {isPlaying ? "stop" : "play"}
       </button>
-      <button onClick={() => (synth.oscillator.type = "sawtooth")}>saw</button>
-      <button onClick={() => (synth.oscillator.type = "square")}>square</button>
-      <button onClick={() => (synth.oscillator.type = "sine")}>sine</button>
+      <div>
+        <button onClick={() => (synth.oscillator.type = "sawtooth")}>
+          saw
+        </button>
+        <button onClick={() => (synth.oscillator.type = "square")}>
+          square
+        </button>
+        <button onClick={() => (synth.oscillator.type = "sine")}>sine</button>
+      </div>
     </div>
   );
 }
