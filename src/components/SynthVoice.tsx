@@ -19,6 +19,10 @@ function SynthVoice() {
     synth.setNote(frequency);
   };
 
+  const handleWaveformChange = (value: OscillatorType) => {
+    synth.oscillator.type = value;
+  };
+
   const playSynth = () => {
     setIsPlaying(true);
 
@@ -40,13 +44,9 @@ function SynthVoice() {
         {isPlaying ? "stop" : "play"}
       </button>
       <div className="waveform">
-        <button onClick={() => (synth.oscillator.type = "sawtooth")}>
-          saw
-        </button>
-        <button onClick={() => (synth.oscillator.type = "square")}>
-          square
-        </button>
-        <button onClick={() => (synth.oscillator.type = "sine")}>sine</button>
+        <button onClick={() => handleWaveformChange("sawtooth")}>saw</button>
+        <button onClick={() => handleWaveformChange("square")}>square</button>
+        <button onClick={() => handleWaveformChange("sine")}>sine</button>
       </div>
       <div className="frequency-slider">
         <Box sx={{ width: 500 }}>
