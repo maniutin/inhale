@@ -3,20 +3,28 @@ import { useState } from "react";
 
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
+import Typography from "@mui/material/Typography";
 
 import "./SynthVoice.scss";
 
+const filter = new Tone.Filter(10000, "lowpass").toDestination();
+
 const synth = new Tone.MonoSynth({
   oscillator: { type: "sine" },
-}).toDestination();
+}).connect(filter);
 
 function SynthVoice() {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [frequency, setFrequency] = useState<number>(261);
+  const [cutoff, setCutoff] = useState<number>(10000);
 
   const handleFrequencyChange = (event: Event, newValue: number | number[]) => {
     setFrequency(newValue as number);
     synth.setNote(frequency);
+  };
+  const handleCutoffChange = (event: Event, newValue: any) => {
+    setCutoff(newValue as number);
+    filter.frequency.value = newValue;
   };
 
   const handleWaveformChange = (value: OscillatorType) => {
@@ -50,6 +58,9 @@ function SynthVoice() {
       </div>
       <div className="frequency-slider">
         <Box sx={{ width: 500 }}>
+          <Typography id="frequency-slider" gutterBottom>
+            Frequency
+          </Typography>
           <Slider
             aria-label="Oscillator Freuqency"
             value={frequency}
@@ -58,6 +69,22 @@ function SynthVoice() {
             max={1000}
             valueLabelDisplay="auto"
             onChange={handleFrequencyChange}
+          />
+        </Box>
+      </div>
+      <div className="cutoff-slider">
+        <Box sx={{ width: 500 }}>
+          <Typography id="cutoff-slider" gutterBottom>
+            Cutoff
+          </Typography>
+          <Slider
+            aria-label="Filter Cutoff"
+            value={cutoff}
+            defaultValue={cutoff}
+            min={20}
+            max={10000}
+            valueLabelDisplay="auto"
+            onChange={handleCutoffChange}
           />
         </Box>
       </div>
