@@ -1,5 +1,5 @@
 import "./App.css";
-import SynthVoice from "./SynthVoice";
+import SynthVoice from "./components/SynthVoice";
 
 function App() {
   return (
