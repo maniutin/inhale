@@ -8,12 +8,7 @@ import "./SynthVoice.scss";
 
 const synth = new Tone.MonoSynth({
   oscillator: { type: "sine" },
-})
-  .toDestination()
-  .chain
-  // delay,
-  // reverb
-  ();
+}).toDestination();
 
 function SynthVoice() {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -37,7 +32,6 @@ function SynthVoice() {
   const stopSynth = () => {
     setIsPlaying(false);
     Tone.Destination.mute = true;
-    // synth.volume.value = -100;
   };
 
   return (
