@@ -11,9 +11,8 @@ function SynthVoice() {
   const playSynth = () => {
     setIsPlaying(true);
 
-    new Tone.Loop(() => {
-      synth.triggerAttackRelease("C4", 1);
-    }, 2).start();
+    synth.volume.value = 0;
+    synth.triggerAttackRelease(261, 86400);
 
     Tone.Transport.start();
     Tone.start();
@@ -21,7 +20,7 @@ function SynthVoice() {
 
   const stopSynth = () => {
     setIsPlaying(false);
-    Tone.Transport.cancel();
+    synth.volume.value = -100;
   };
 
   return (
