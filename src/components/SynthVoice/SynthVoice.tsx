@@ -11,14 +11,10 @@ import Typography from "@mui/material/Typography";
 import "./SynthVoice.scss";
 
 function SynthVoice() {
-  const { synth, vol } = constants;
+  const { synth } = constants;
 
-  const {
-    handleFrequencyChange,
-    handleParameterChange,
-    handleVolumeChange,
-    handleWaveformChange,
-  } = utils;
+  const { handleFrequencyChange, handleParameterChange, handleWaveformChange } =
+    utils;
 
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [frequency, setFrequency] = useState<number>(261);
