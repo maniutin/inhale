@@ -7,16 +7,18 @@ import Typography from "@mui/material/Typography";
 
 import "./SynthVoice.scss";
 
-const filter = new Tone.Filter(10000, "lowpass").toDestination();
+const filter = new Tone.Filter(20000, "highpass", -24).toDestination();
 
 const synth = new Tone.MonoSynth({
   oscillator: { type: "sine" },
-}).connect(filter);
+})
+  // .toDestination();
+  .connect(filter);
 
 function SynthVoice() {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [frequency, setFrequency] = useState<number>(261);
-  const [cutoff, setCutoff] = useState<number>(10000);
+  const [cutoff, setCutoff] = useState<number>(20000);
 
   const handleFrequencyChange = (event: Event, newValue: number | number[]) => {
     setFrequency(newValue as number);
@@ -35,7 +37,7 @@ function SynthVoice() {
     setIsPlaying(true);
 
     Tone.Destination.mute = false;
-    synth.triggerAttackRelease(frequency, 86400, 0, 0.5);
+    synth.triggerAttackRelease(frequency, 86400, 0, 1);
 
     Tone.Transport.start();
     Tone.start();
@@ -82,7 +84,7 @@ function SynthVoice() {
             value={cutoff}
             defaultValue={cutoff}
             min={20}
-            max={10000}
+            max={20000}
             valueLabelDisplay="auto"
             onChange={handleCutoffChange}
           />
