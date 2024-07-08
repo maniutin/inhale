@@ -8,7 +8,9 @@ import Typography from "@mui/material/Typography";
 import "./SynthVoice.scss";
 import { Frequency } from "tone/build/esm/core/type/Units";
 
-var vol = new Tone.Volume(-6);
+const vol = new Tone.PanVol(0, -6);
+
+const reverb = new Tone.Reverb({ decay: 1.5, wet: 0 }).toDestination();
 
 const filter = new Tone.Filter({
   type: "lowpass",
@@ -21,7 +23,7 @@ const synth = new Tone.DuoSynth({
   harmonicity: 1,
   voice0: { oscillator: { type: "sine" } },
   voice1: { oscillator: { type: "sine" } },
-}).chain(vol, filter);
+}).chain(vol, filter, reverb);
 
 function SynthVoice() {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -29,10 +31,13 @@ function SynthVoice() {
   const [cutoff, setCutoff] = useState<number>(10000);
   const [harmonicity, setHarmonicity] = useState<number>(1);
   const [volume, setVolume] = useState<number>(-6);
+  const [reverbAmount, setReverbAmount] = useState<number>(0);
+  const [reverbDecay, setReverbDecay] = useState<number>(1.5);
 
   const handleVolumeChange = (event: Event, newValue: any) => {
     setVolume(newValue as number);
     vol.volume.value = newValue;
+    if (newValue === -36) vol.mute = true;
   };
 
   const handleFrequencyChange = (event: Event, newValue: any) => {
@@ -59,6 +64,16 @@ function SynthVoice() {
         synth.voice1.oscillator.type = value;
         break;
     }
+  };
+
+  const handleReverbAmountChange = (event: Event, newValue: any) => {
+    setReverbAmount(newValue as number);
+    reverb.wet.value = newValue;
+  };
+
+  const handleReverbDecayChange = (event: Event, newValue: any) => {
+    setReverbDecay(newValue as number);
+    reverb.decay = newValue;
   };
 
   const playSynth = () => {
@@ -160,6 +175,39 @@ function SynthVoice() {
             step={0.01}
             valueLabelDisplay="auto"
             onChange={handleHarmonicityChange}
+          />
+        </Box>
+      </div>
+      <div className="reverb-amount-slider">
+        <Box sx={{ width: 500 }}>
+          <Typography id="reverb-amount-slider" gutterBottom>
+            Reverb Amount
+          </Typography>
+          <Slider
+            aria-label="Reverb Amount"
+            value={reverbAmount}
+            defaultValue={reverbAmount}
+            min={0}
+            max={1}
+            step={0.01}
+            valueLabelDisplay="auto"
+            onChange={handleReverbAmountChange}
+          />
+        </Box>
+      </div>
+      <div className="reverb-decay-slider">
+        <Box sx={{ width: 500 }}>
+          <Typography id="reverb-decay-slider" gutterBottom>
+            Reverb Decay
+          </Typography>
+          <Slider
+            aria-label="Reverb Decay"
+            value={reverbDecay}
+            defaultValue={reverbDecay}
+            min={1}
+            max={60}
+            valueLabelDisplay="auto"
+            onChange={handleReverbDecayChange}
           />
         </Box>
       </div>
