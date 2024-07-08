@@ -8,9 +8,11 @@ import Typography from "@mui/material/Typography";
 import "./SynthVoice.scss";
 import { Frequency } from "tone/build/esm/core/type/Units";
 
+var vol = new Tone.Volume(-6);
+
 const filter = new Tone.Filter({
   type: "lowpass",
-  frequency: 5000,
+  frequency: 10000,
   rolloff: -24,
 }).toDestination();
 
@@ -19,15 +21,19 @@ const synth = new Tone.DuoSynth({
   harmonicity: 1,
   voice0: { oscillator: { type: "sine" } },
   voice1: { oscillator: { type: "sine" } },
-})
-  // .toDestination();
-  .connect(filter);
+}).chain(vol, filter);
 
 function SynthVoice() {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [frequency, setFrequency] = useState<number>(261);
-  const [cutoff, setCutoff] = useState<number>(5000);
+  const [cutoff, setCutoff] = useState<number>(10000);
   const [harmonicity, setHarmonicity] = useState<number>(1);
+  const [volume, setVolume] = useState<number>(-6);
+
+  const handleVolumeChange = (event: Event, newValue: any) => {
+    setVolume(newValue as number);
+    vol.volume.value = newValue;
+  };
 
   const handleFrequencyChange = (event: Event, newValue: any) => {
     setFrequency(newValue as number);
@@ -91,6 +97,23 @@ function SynthVoice() {
         </button>
         <button onClick={() => handleWaveformChange("sine", 1)}>sine</button>
       </div>
+      <div className="volume-slider">
+        <Box sx={{ height: 200 }}>
+          <Typography id="volume-slider" gutterBottom>
+            Volume
+          </Typography>
+          <Slider
+            aria-label="Volume"
+            value={volume}
+            defaultValue={volume}
+            min={-36}
+            max={0}
+            orientation="vertical"
+            valueLabelDisplay="auto"
+            onChange={handleVolumeChange}
+          />
+        </Box>
+      </div>
       <div className="frequency-slider">
         <Box sx={{ width: 500 }}>
           <Typography id="frequency-slider" gutterBottom>
@@ -117,7 +140,7 @@ function SynthVoice() {
             value={cutoff}
             defaultValue={cutoff}
             min={20}
-            max={5000}
+            max={10000}
             valueLabelDisplay="auto"
             onChange={handleCutoffChange}
           />
