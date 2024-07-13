@@ -21,7 +21,7 @@ export default function Reverb() {
       <Typography variant="h5" gutterBottom>
         Reverb
       </Typography>
-      <div className="reverb-amount-slider">
+      <div className="slider reverb-amount-slider">
         <Box sx={{ width: 500 }}>
           <Typography id="reverb-amount-slider" gutterBottom>
             Reverb Amount
@@ -45,7 +45,7 @@ export default function Reverb() {
           />
         </Box>
       </div>
-      <div className="reverb-decay-slider">
+      <div className="slider reverb-decay-slider">
         <Box sx={{ width: 500 }}>
           <Typography id="reverb-decay-slider" gutterBottom>
             Reverb Decay

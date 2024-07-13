@@ -14,7 +14,7 @@ export default function Volume() {
 
   return (
     <>
-      <div className="volume-slider">
+      <div className="slider volume-slider">
         <Box sx={{ height: 200 }}>
           <Typography id="volume-slider" gutterBottom>
             Volume

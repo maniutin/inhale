@@ -16,7 +16,7 @@ export default function Filter() {
 
   return (
     <>
-      <div className="cutoff-slider">
+      <div className="slider cutoff-slider">
         <Box sx={{ width: 500 }}>
           <Typography variant="h5" gutterBottom>
             Filter

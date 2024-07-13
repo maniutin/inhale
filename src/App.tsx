@@ -1,4 +1,4 @@
-import "./App.css";
+import "./App.scss";
 import Filter from "./components/Filter/Filter";
 import Reverb from "./components/Reverb/Reverb";
 import SynthVoice from "./components/SynthVoice/SynthVoice";

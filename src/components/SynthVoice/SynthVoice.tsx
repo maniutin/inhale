@@ -67,7 +67,7 @@ function SynthVoice() {
         </button>
       </div>
 
-      <div className="frequency-slider">
+      <div className="slider frequency-slider">
         <Box sx={{ width: 500 }}>
           <Typography id="frequency-slider" gutterBottom>
             Frequency
@@ -85,7 +85,7 @@ function SynthVoice() {
           />
         </Box>
       </div>
-      <div className="harmonicity-slider">
+      <div className="slider harmonicity-slider">
         <Box sx={{ width: 500 }}>
           <Typography id="harmonicity-slider" gutterBottom>
             Harmonicity
